@@ -5,6 +5,7 @@ import (
 	"github.com/teamhanko/hanko/backend/config"
 	"gopkg.in/gomail.v2"
 	"strconv"
+	"crypto/tls"
 )
 
 type Mailer interface {
@@ -21,6 +22,9 @@ func NewMailer(config config.SMTP) (Mailer, error) {
 		return nil, fmt.Errorf("failed to parse SMTP port: %w", err)
 	}
 	d := gomail.NewDialer(config.Host, port, config.User, config.Password)
+	if(config.Insecure) {
+		d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	}
 	return &mailer{
 		dialer: d,
 	}, nil

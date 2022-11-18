@@ -74,6 +74,7 @@ func DefaultConfig() *Config {
 		Passcode: Passcode{
 			Smtp: SMTP{
 				Port: "465",
+				Insecure: false,
 			},
 			TTL: 300,
 		},
@@ -222,6 +223,7 @@ type SMTP struct {
 	Port     string `yaml:"port" json:"port" koanf:"port"`
 	User     string `yaml:"user" json:"user" koanf:"user"`
 	Password string `yaml:"password" json:"password" koanf:"password"`
+	Insecure bool   `yaml:"insecure" json:"insecure" koanf:"insecure"`
 }
 
 func (s *SMTP) Validate() error {
